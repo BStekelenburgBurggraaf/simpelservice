@@ -6,11 +6,12 @@ if($_POST)
 {
 	//Connect to database
 	include_once('database/database.php');
-	$query = "SELECT password, id, username FROM users WHERE username = '".$_POST["uname"]."'";
+	$query = "SELECT password, id, username, bedrijf_id FROM users WHERE username = '".$_POST["uname"]."'";
 	$result = mysql_query($query);
 	$row = mysql_fetch_assoc($result);
 	if($_POST["psw"] == $row["password"])
 	{
+		$_SESSION["bedrijf_id"] = $row["bedrijf_id"];
 		$_SESSION["logid"] = $row["id"];
 		header("Location: index.php");	
 	}

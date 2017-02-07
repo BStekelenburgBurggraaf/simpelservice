@@ -6,7 +6,8 @@ if($_POST)
 {
 	//Connect to database
 	include_once('database/database.php');
-	$query = "INSERT INTO tickets (title, description,  priority, user_id) VALUES ('".$_POST["title"]."', '".$_POST["description"]."', '".$_POST["priority"]."', ".$_SESSION["logid"].")";
+	
+	$query = "INSERT INTO tickets (title, description,  priority, user_id, bedrijf_id) VALUES ('".$_POST["title"]."', '".$_POST["description"]."', '".$_POST["priority"]."', ".$_SESSION["logid"].", ".$_SESSION["bedrijf_id"].")";
 	$result = mysql_query($query);
 }
 ?>
