@@ -6,12 +6,12 @@ if($_POST)
 {
 	//Connect to database
 	include_once('database/database.php');
-	$query = "SELECT password FROM users WHERE username = '".$_POST["uname"]."'";
+	$query = "SELECT password, id, username FROM users WHERE username = '".$_POST["uname"]."'";
 	$result = mysql_query($query);
 	$row = mysql_fetch_assoc($result);
 	if($_POST["psw"] == $row["password"])
 	{
-		$_SESSION["log"] = $_POST["uname"];
+		$_SESSION["logid"] = $row["id"];
 		header("Location: index.php");	
 	}
 }
@@ -19,8 +19,8 @@ if($_POST)
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" type="text/css" href="css/login.css">
-    <title>Untitled Document</title>
+    <link rel="stylesheet" type="text/css" href="css/form.css">
+    <title>SimpelService - Inloggen</title>
 </head>
 <body>
 	<form action="login.php" method="post">
