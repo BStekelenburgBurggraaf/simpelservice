@@ -6,7 +6,7 @@ if($_POST)
 {
 	//Connect to database
 	include_once('database/database.php');
-	$query = "INSERT INTO tickets (title, description, user_id) VALUES ('".$_POST["title"]."', '".$_POST["description"]."', ".$_SESSION["logid"].")";
+	$query = "INSERT INTO tickets (title, description,  priority, user_id) VALUES ('".$_POST["title"]."', '".$_POST["description"]."', '".$_POST["priority"]."', ".$_SESSION["logid"].")";
 	$result = mysql_query($query);
 }
 ?>
@@ -24,7 +24,14 @@ if($_POST)
         	<input type="text" placeholder="Enter Title" name="title" required>
     
         	<label><b>Omschrijving</b></label>
-        	<textarea name="description"></textarea>
+        	<textarea name="description" required="required"></textarea>
+            
+            <label><b>Prioriteit</b></label>
+            <select name="priority">
+            	<option value="urgent">Urgent</option>
+                <option value="normaal" selected>Normaal</option>
+                <option value="kan wachten">Kan Wachten</option>
+            </select>
     
         	<button type="submit">Versturen</button>
       	</div>
