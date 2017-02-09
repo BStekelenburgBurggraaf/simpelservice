@@ -7,10 +7,10 @@
 				if($login[0] == "gelukt"){
 					$_SESSION["id"] = $login[1];
 					$_SESSION["log"] = "ja";
-					//header("Location: https://www.google.com");
+					header("Location: /simpelservice/boards/home");
 				}
 				$uname = $_POST["uname"];
-			}
+			} 
 			require_once("views/login/login.php");
 		}
 	}

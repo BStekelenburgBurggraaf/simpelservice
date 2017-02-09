@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="css/form.css">
+    <link rel="stylesheet" type="text/css" href="/simpelservice/css/form.css">
 	<title>Untitled Document</title>
 </head>
 
