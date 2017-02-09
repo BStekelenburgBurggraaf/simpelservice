@@ -9,6 +9,10 @@
 				require_once("models/login.php");
 				$controller = new LoginController();
 			break;
+			case 'boards':
+				require_once("models/board.php");
+				$controller = new BoardsController();
+			break;
 			case 'tickets':
 				require_once("models/ticket.php");
 				$controller = new TicketsController();
@@ -24,9 +28,10 @@
 	}
 	
 	//Lijst van controller en acties
-	$controllers = array('login' => array('login', 'logout'),
-						 'tickets' => array('create', 'show'),
-						 'errors' => array('error'));
+	$controllers = array('login' 	=> array('login', 'logout'),
+						 'boards' 	=> array('home'),
+						 'tickets' 	=> array('create', 'show'),
+						 'errors' 	=> array('error'));
 	
 	//Check of de aangeroepen controller en acties bestaan
 	if (array_key_exists($controller, $controllers)) {
