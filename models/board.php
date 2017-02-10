@@ -14,7 +14,7 @@
 			$this->ticketPriority	= $ticketPriority;
 		}
 		
-		public static function getBoards($id) {
+		public static function getBoards($id, $searchId = NULL) {
 			$db = Db::getInstance();
 			
 			$id = intval($id);
@@ -25,7 +25,12 @@
 			$bedrijf_id = $res["bedrijf_id"];
 			$status = $res["status"];
 			if ($status == "personeel") {
-				$req = $db->query("SELECT * FROM boards");
+				if(!is_null($searchId)){
+					$req = $db->prepare("SELECT * FROM boards WHERE bedrijf_id = :id");
+					$req->execute(array('id' => $searchId));
+				} else {
+					$req = $db->query("SELECT * FROM boards");
+				}
 			} else {
 				$req = $db->prepare("SELECT * FROM boards WHERE bedrijf_id = :id");
 				$req->execute(array('id' => $bedrijf_id));	
