@@ -19,6 +19,14 @@
                 <option value="kan wachten">Kan Wachten</option>
             </select>
     		<input type="hidden" name="board_id" value="<?php echo $board_id; ?>"/>
+            <?php
+			if($role == "personeel") {
+				?>
+                <label><b>Onzichtbaar voor klant</b></label><br/>
+                <input type="checkbox" name="visible" value="onzichtbaar" />
+                <?php
+			}
+			?>
         	<button type="submit">Versturen</button>
       	</div>
     

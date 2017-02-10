@@ -16,6 +16,11 @@ form.log input[type=text], input[type=password] {
     box-sizing: border-box;
 }
 
+form.log input[type="checkbox"] {
+	width: 45px !important;
+	height: 45px !important;
+}
+
 /* Full-width textareas */
 form.log textarea {
 	width: 100%;

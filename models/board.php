@@ -37,8 +37,11 @@
 				$ticketContent = array();
 				$ticketPriority = array();
 				$ticketAuthor = array();
-				
-				$req2 = $db->prepare("SELECT * FROM tickets WHERE board_id = :id");
+				if($status == "personeel") {
+					$req2 = $db->prepare("SELECT * FROM tickets WHERE board_id = :id");
+				} else {
+					$req2 = $db->prepare("SELECT * FROM tickets WHERE board_id = :id AND visibility = 'zichtbaar'");	
+				}
 				$req2->execute(array('id' => $boardId));
 				foreach($req2->fetchAll() as $ticket) {
 					array_push($ticketTitle, $ticket["title"]);
