@@ -1,4 +1,4 @@
-	<form class="log" action="/simpelservice/tickets/create/<?php echo $board_id; ?>" method="post">
+	<form class="log" enctype="multipart/form-data" action="/simpelservice/tickets/create/<?php echo $board_id; ?>" method="post">
       	<div class="container">
         	<label><b>Titel</b></label>
         	<input type="text" placeholder="Enter Title" name="title" required>
@@ -18,6 +18,9 @@
                 <option value="normaal" selected>Normaal</option>
                 <option value="kan wachten">Kan Wachten</option>
             </select>
+            <label><b>Images:</b></label>
+            <input type="file" name="images[]" />
+            <input type="file" name="images[]" /><br />
     		<input type="hidden" name="board_id" value="<?php echo $board_id; ?>"/>
             <?php
 			if($role == "personeel") {
