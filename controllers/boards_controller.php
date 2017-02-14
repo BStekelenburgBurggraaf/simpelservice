@@ -8,5 +8,10 @@
 			}
 			require_once("views/boards/home.php");
 		}
+		
+		public function filterUser() {
+			$boards = Board::filterUser($_GET["id"]);
+			require_once("views/boards/home.php");	
+		}
 	}
 ?>

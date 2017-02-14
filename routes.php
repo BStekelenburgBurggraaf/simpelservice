@@ -29,7 +29,7 @@
 	
 	//Lijst van controller en acties
 	$controllers = array('login' 	=> array('login', 'logout'),
-						 'boards' 	=> array('home'),
+						 'boards' 	=> array('home', 'filterUser'),
 						 'tickets' 	=> array('create', 'show'),
 						 'errors' 	=> array('error'));
 	
