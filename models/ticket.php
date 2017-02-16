@@ -97,6 +97,46 @@
 			$req = $db->prepare("INSERT INTO tickets (title, description, category,  priority, files, user_id, bedrijf_id, board_id, visibility) 
 								 VALUES (:title, :description, :category, :priority, :fileNames, :user_id, :bedrijf_id, :board_id, :visibility)");
 			$req->execute(array('title' => $title, 'description' => $content, 'category' => $category, 'priority' => $priority, 'fileNames' => $fileNames, 'user_id' => $user_id, 'bedrijf_id' => $bedrijf_id, 'board_id' => $board_id, 'visibility' => $visible ));
+			
+			//Variabele word direct in de code gezet hier, omdat de parameter niet goed kon worden gebind in de execute.
+			$req2 = $db->prepare("SELECT email FROM users WHERE status = 'personeel' AND board_subscriptions LIKE '% $board_id,%'");
+			$req2->execute();
+			//Naam van het board ophalen
+			$req3 = $db->prepare("SELECT title FROM boards WHERE id = :id");
+			$req3->execute(array('id' => $board_id));
+			$board = $req3->fetch();
+			$boardName = $board["title"];
+			//Teller zodat alleen de eerste geen comma zal bevatten.
+			$i = 0;
+			$to = "";
+			foreach($req2->fetchAll() as $user) {
+				if ($i == 0) {
+					$to = $user["email"];
+					$i = 1;
+				} else { 
+					$to .= ", " . $user["email"];
+				}
+			}
+			$subject = "New ticket: " . $title;
+			$message = '
+			<html>
+			<head>
+			  <title>New ticket: '.$title.'</title>
+			</html>
+			<body>
+			  <h3>'. $title .'</h3>
+			  <hr>
+			  <p><b>Prioriteit:</b> '.$priority.'</p>
+			  <p><b>Board:</b> '.$boardName.'</p>
+			  <p><b>Content:</b><br/>'.$content.'
+			</body>
+			';
+			
+			$headers[] = 'MIME-Version: 1.0';
+			$headers[] = 'Content-type: text/html; charset=iso-8859-1';
+			$headers[] = 'From: SimpelService <b.stekelenburg@burggraaf.nl>';
+			
+			mail($to, $subject, $message, implode("\r\n", $headers));
 		}
 		
 		public static function GetUserType($id) {
@@ -110,4 +150,4 @@
 			return $res["status"];	
 		}
 	}
-?>
+?>	

@@ -14,9 +14,13 @@
 				}
 				$ticket = Ticket::create($_SESSION["id"], $_POST["title"], $_POST["content"], $_POST["category"], $_POST["priority"], $_POST["board_id"], $visible, $fileNames);
 			}
-			$board_id = $_GET["id"];
-			$role = Ticket::getUserType($_SESSION["id"]);
-			require_once("views/tickets/create.php");
+			if(isset($_GET["id"]) && $_GET["id"] != "") {
+				$board_id = $_GET["id"];
+				$role = Ticket::getUserType($_SESSION["id"]);
+				require_once("views/tickets/create.php");
+			} else {
+				header("Location: /simpelservice/boards/home");
+			}
 		}
 		
 		public function show() {
