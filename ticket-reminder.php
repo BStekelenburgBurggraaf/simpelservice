@@ -2,7 +2,6 @@
 	//Maak verbinding met het datbase.
 	require_once "connection.php";
 	$db = Db::getInstance();
-	 echo "test";
 	//Stel de SQL query samen.
 	//SUBDATE(NOW(), INTERVAL 1 WEEK) zorgt ervoor dat hij de huidige tijd vergelijkt met alle laatste update entries van de tickets, als het ouder of gelijk is aan 1 week, zal hij ze terug geven
 	$req = $db->prepare("SELECT * FROM tickets WHERE last_update <= SUBDATE(NOW(), INTERVAL 1 WEEK) AND status != 'closed'");
@@ -16,7 +15,6 @@
 		$req2->execute(array('id' => $boardId));
 		$board = $req2->fetch();
 		$boardName = $board["title"];
-		echo $boardName;
 		
 		$i = 0;
 		$to = "";
@@ -49,7 +47,6 @@
 		$headers[] = 'MIME-Version: 1.0';
 		$headers[] = 'Content-type: text/html; charset=iso-8859-1';
 		$headers[] = 'From: SimpelService <b.stekelenburg@burggraaf.nl>';
-		echo $message;
 		mail($to, $subject, $message, implode("\r\n", $headers));
 	}
 ?>
