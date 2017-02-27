@@ -1,15 +1,78 @@
-<?php
-foreach($boards as $board) {
-?>
-	<h1><?php echo $board->boardName; ?></h1>
-    <?php
-		for ($i = 0; $i < count($board->ticketTitle); $i++) {
-			?>
-            <p><?php echo $board->ticketTitle[$i]; ?><br/><?php echo $board->ticketContent[$i] ?><br/><?php echo $board->ticketAuthor[$i]; ?><br/><?php echo $board->ticketPriority[$i]; ?></p>
+<div class="wrapper">
+    <div class="menu">
+    <!--&#8981;-->
+    	<ul>
+          <li class="dropdown">
+          <?php if(count($boards) > 1) { ?>
+            <a href="/simpelservice/boards/home" class="dropbtn">Projecten &#9660;</a>
+            <div class="dropdown-content">
+              <?php 
+			  foreach ($boards as $board) {
+			  ?>
+              <a href="/simpelservice/boards/home/<?php echo $board->boardId; ?>"><?php echo $board->boardName; ?></a>
+              <?php  
+			  } 
+			  ?>
+            </div>
+          <?php } else { ?>
+          	<a href="/simpelservice/boards/home">Terug &#9664;</a>
+          <?php } ?>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropbtn">Tickets &#9660;</a>
+            <div class="dropdown-content">
+              <a href="#">Aanmaken</a>
+            </div>
+          </li>
+          <li>
+          	<a href="#">Bedrijven</a>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropbtn">Personeel &#9660;</a>
+            <div class="dropdown-content">
+              <a href="#">Nieuw project</a>
+              <a href="#">Nieuw bedrijf</a>
+            </div>
+          </li>
+        </ul>
+    </div>
+    <div class="content">
+    	<div class="contentWrapper">
+    	<?php
+		foreach($boards as $board) {
+		?>
+            <h1 class="boardTitle"><?php echo $board->boardName; ?></h1>
+            <hr />
+            <table>
+                <tr>
+                    <th>Titel</th> 
+                    <th>Content</th>
+                    <th>Categorie</th>
+                    <th>Prioriteit</th>
+                    <th>Status</th>
+                    <th>Auteur</th>
+                </tr>
             <?php
+                for ($i = 0; $i < count($board->ticketTitle); $i++) {
+                ?>
+                <tr class="draw meet">
+                    <td class="ticketTitle"><?php echo $board->ticketTitle[$i]; ?></td>
+                    <td class="ticketContent"><?php echo $board->ticketContent[$i]; ?></td>
+                    <td class="ticketCategory"><?php echo $board->ticketCategory[$i]; ?></td>
+                    <td class="ticketPriority"><?php echo $board->ticketPriority[$i]; ?></td>
+                    <td class="ticketStatus"><?php echo $board->ticketStatus[$i]; ?></td>
+                    <td class="ticketAuthor"><?php echo $board->ticketAuthor[$i]; ?></td>
+                </tr>
+                <?php
+                }
+                ?>
+            </table>
+		<?php
 		}
-	?>
-<?php
-}
-?>
-		
+		?>
+        </div>
+    </div>
+    <div class="news">
+    	
+    </div>
+</div>

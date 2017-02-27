@@ -3,6 +3,7 @@
 <head>
 	<meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="/simpelservice/css/form.css">
+    <link rel="stylesheet" type="text/css" href="/simpelservice/css/board.css">
 	<title>Untitled Document</title>
 </head>
 

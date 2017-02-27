@@ -136,7 +136,7 @@
 			$headers[] = 'Content-type: text/html; charset=iso-8859-1';
 			$headers[] = 'From: SimpelService <b.stekelenburg@burggraaf.nl>';
 			
-			mail($to, $subject, $message, implode("\r\n", $headers));
+			//mail($to, $subject, $message, implode("\r\n", $headers));
 		}
 		
 		public static function GetUserType($id) {

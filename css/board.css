@@ -1,0 +1,169 @@
+* {
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+div.wrapper {
+	position: absolute;
+	height: 100%;
+	width: 100%;	
+}
+
+div.menu {
+	width: 100%;
+	height: 50px;
+	z-index: 1;
+	background-color: #01828E;
+	box-shadow: 0 4px 2px -2px gray;
+}
+
+div.content {
+	padding-top: 10px;
+	padding-left: 10px;
+	width: calc(85% - 10px);
+	height: calc(100% - 60px);
+	z-index: 0;
+	display: inline-block;
+	overflow-y: scroll;
+}
+
+div.contentWrapper {
+	margin: auto;
+	width: 75%;
+}
+
+div.news {
+	width: calc(15% - 1px);
+	height: calc(100% - 51px);
+	z-index: 2;	
+	background-color: #0BB2C2;
+	display: inline-block;
+	float: right;
+	box-shadow: -4px 0 2px -2px gray;
+}
+
+table, tr, td, th {
+	border: solid 1px white;
+	border-collapse: collapse;
+}
+
+table {
+	margin-top: 20px;
+}
+
+h1:nth-child(n+2) {
+	margin-top: 10px;	
+}
+
+td {
+	height: 50px;
+	min-width: 100px;
+	padding: 5px;
+}
+
+th {
+	background-color: #41B17E;
+	height: 50px;	
+}
+
+td:nth-child(odd) {
+	background-color: #FFD1AA;	
+}
+
+td:nth-child(even) {
+	background-color: #D49A6A;	
+}
+
+td.ticketContent  {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 300px;
+	max-width: 300px;	
+}
+
+td.ticketTitle {
+	width: 100px;	
+}
+
+td.ticketAuthor {
+	width: 100px;	
+}
+
+div.contentWrapper:last-child {
+	padding-bottom: 10px;	
+}
+
+hr {
+	width: 75%;	
+}
+
+tr td {
+	-webkit-filter: brightness(100%);
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    transition: all 1s ease;
+	color: black;
+}
+
+tr:hover td {
+	-webkit-filter: brightness(75%);
+}
+
+/*menu */
+
+div.menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+li {
+    float: left;
+	margin: 0;
+}
+
+li a, .dropbtn {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 16px 16px;
+    text-decoration: none;
+}
+
+li a:hover, .dropdown:hover .dropbtn {
+    background-color: #4CAF50;
+}
+
+li.dropdown {
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 6px 10px 0px gray;
+    z-index: 1;
+	margin-top: -4px;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}

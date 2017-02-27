@@ -1,17 +1,23 @@
 <?php
 	class Board {
 		public $boardName;
+		public $boardId;
 		public $ticketTitle 	= array();
 		public $ticketContent 	= array();
 		public $ticketAuthor 	= array();
 		public $ticketPriority 	= array();
+		public $ticketCategory	= array();
+		public $ticketStatus	= array();
 		
-		public function __construct($boardName, $ticketTitle, $ticketContent, $ticketAuthor, $ticketPriority) {
+		public function __construct($boardName, $ticketTitle, $ticketContent, $ticketAuthor, $ticketPriority, $ticketCategory, $ticketStatus, $boardId) {
 			$this->boardName 		= $boardName;
+			$this->boardId			= $boardId;
 			$this->ticketTitle 		= $ticketTitle;
 			$this->ticketContent	= $ticketContent;
 			$this->ticketAuthor 	= $ticketAuthor;
 			$this->ticketPriority	= $ticketPriority;
+			$this->ticketCategory	= $ticketCategory;
+			$this->ticketStatus		= $ticketStatus;
 		}
 		
 		public static function getBoards($id, $searchId = NULL) {
@@ -42,6 +48,8 @@
 				$ticketContent = array();
 				$ticketPriority = array();
 				$ticketAuthor = array();
+				$ticketCategory = array();
+				$ticketStatus = array();
 				if($status == "personeel") {
 					$req2 = $db->prepare("SELECT * FROM tickets WHERE board_id = :id");
 				} else {
@@ -52,6 +60,8 @@
 					array_push($ticketTitle, $ticket["title"]);
 					array_push($ticketContent, $ticket["description"]);
 					array_push($ticketPriority, $ticket["priority"]);
+					array_push($ticketCategory, $ticket["category"]);
+					array_push($ticketStatus, $ticket["status"]);
 					
 					$req3 = $db->prepare("SELECT username FROM users WHERE id = :id");
 					$req3->execute(array('id' => $ticket["user_id"]));
@@ -60,9 +70,9 @@
 					array_push($ticketAuthor, $res["username"]);
 				}
 				
-				$list[] = new Board($boardName, $ticketTitle, $ticketContent, $ticketPriority, $ticketAuthor);
+				$list[] = new Board($boardName, $ticketTitle, $ticketContent, $ticketAuthor, $ticketPriority, $ticketCategory, $ticketStatus, $boardId);
 			}
-			return $list;
+			return $list; 
 		}
 		
 		public static function filterUser($id) {
@@ -105,6 +115,8 @@
 				$ticketContent = array();
 				$ticketPriority = array();
 				$ticketAuthor = array();
+				$ticketCategory = array();
+				$ticketStatus = array();
 				if($status == "personeel") {
 					$req2 = $db->prepare("SELECT * FROM tickets WHERE board_id = $boardId AND id IN ($ticketsCount)");
 				} else {
@@ -115,6 +127,8 @@
 					array_push($ticketTitle, $ticket["title"]);
 					array_push($ticketContent, $ticket["description"]);
 					array_push($ticketPriority, $ticket["priority"]);
+					array_push($ticketCategory, $ticket["category"]);
+					array_push($ticketStatus, $ticket["status"]);
 					
 					$req3 = $db->prepare("SELECT username FROM users WHERE id = :id");
 					$req3->execute(array('id' => $ticket["user_id"]));
@@ -123,7 +137,7 @@
 					array_push($ticketAuthor, $res["username"]);
 				}
 				
-				$list[] = new Board($boardName, $ticketTitle, $ticketContent, $ticketAuthor, $ticketPriority);
+				$list[] = new Board($boardName, $ticketTitle, $ticketContent, $ticketAuthor, $ticketPriority, $ticketCategory, $ticketStatus, $boardId);
 			}
 			return $list;
 		}
