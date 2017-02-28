@@ -40,7 +40,7 @@
             <input type="button" value="Extra image toevoegen" onClick="addInput('dynamicInput');">
     		<br /><input type="hidden" name="board_id" value="<?php echo $board_id; ?>"/>
             <?php
-			if($role == "personeel") {
+			if($role == "personeel" || $role == "admin") {
 				?>
                 <label><b>Onzichtbaar voor klant</b></label><br/>
                 <input type="checkbox" name="visible" value="onzichtbaar" />

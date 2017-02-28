@@ -18,20 +18,16 @@
           	<a href="/simpelservice/boards/home">Terug &#9664;</a>
           <?php } ?>
           </li>
-          <li class="dropdown">
-            <a href="#" class="dropbtn">Tickets &#9660;</a>
-            <div class="dropdown-content">
-              <a href="#">Aanmaken</a>
-            </div>
-          </li>
           <li>
           	<a href="#">Bedrijven</a>
           </li>
           <li class="dropdown">
-            <a href="#" class="dropbtn">Personeel &#9660;</a>
+            <a href="/simpelservice/admin/home" class="dropbtn">Admin &#9660;</a>
             <div class="dropdown-content">
-              <a href="#">Nieuw project</a>
-              <a href="#">Nieuw bedrijf</a>
+              <a href="/simpelservice/admin/createProject">Nieuw project</a>
+              <a href="/simpelservice/admin/createCompany">Nieuw bedrijf</a>
+              <a href="/simpelservice/admin/createCategory">Nieuwe cateogrie</a>
+              <a href="/simpelservice/admin/createUser">Nieuwe gebruiker</a>
             </div>
           </li>
         </ul>

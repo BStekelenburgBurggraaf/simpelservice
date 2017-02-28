@@ -94,12 +94,12 @@
 			$bedrijf_id = $res["bedrijf_id"];
 			
 			//Insert into
-			$req = $db->prepare("INSERT INTO tickets (title, description, category,  priority, files, user_id, bedrijf_id, board_id, visibility) 
+			$req = $db->prepare("INSERT INTO tickets (title, description, category_id,  priority, files, user_id, bedrijf_id, board_id, visibility) 
 								 VALUES (:title, :description, :category, :priority, :fileNames, :user_id, :bedrijf_id, :board_id, :visibility)");
 			$req->execute(array('title' => $title, 'description' => $content, 'category' => $category, 'priority' => $priority, 'fileNames' => $fileNames, 'user_id' => $user_id, 'bedrijf_id' => $bedrijf_id, 'board_id' => $board_id, 'visibility' => $visible ));
 			
 			//Variabele word direct in de code gezet hier, omdat de parameter niet goed kon worden gebind in de execute.
-			$req2 = $db->prepare("SELECT email FROM users WHERE status = 'personeel' AND board_subscriptions LIKE '% $board_id,%'");
+			$req2 = $db->prepare("SELECT email FROM users WHERE role = 'personeel' AND board_subscriptions LIKE '% $board_id,%'");
 			$req2->execute();
 			//Naam van het board ophalen
 			$req3 = $db->prepare("SELECT title FROM boards WHERE id = :id");
@@ -143,11 +143,11 @@
 			$db = Db::getInstance();
 			
 			$id = intval($id);
-			$req = $db->prepare("SELECT status FROM users WHERE id = :id");
+			$req = $db->prepare("SELECT role FROM users WHERE id = :id");
 			$req->execute(array('id' => $id));
 			$res = $req->fetch();
 			
-			return $res["status"];	
+			return $res["role"];	
 		}
 	}
 ?>	

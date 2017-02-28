@@ -24,12 +24,12 @@
 			$db = Db::getInstance();
 			
 			$id = intval($id);
-			$req = $db->prepare("SELECT bedrijf_id, status FROM users WHERE users.id = :id");
+			$req = $db->prepare("SELECT bedrijf_id, role FROM users WHERE users.id = :id");
 			$req->execute(array('id' => $id));
 			$res = $req->fetch();
 			
 			$bedrijf_id = $res["bedrijf_id"];
-			$status = $res["status"];
+			$status = $res["role"];
 			if ($status == "personeel") {
 				if(!is_null($searchId)){
 					$req = $db->prepare("SELECT * FROM boards WHERE bedrijf_id = :id");
@@ -60,7 +60,7 @@
 					array_push($ticketTitle, $ticket["title"]);
 					array_push($ticketContent, $ticket["description"]);
 					array_push($ticketPriority, $ticket["priority"]);
-					array_push($ticketCategory, $ticket["category"]);
+					array_push($ticketCategory, $ticket["category_id"]);
 					array_push($ticketStatus, $ticket["status"]);
 					
 					$req3 = $db->prepare("SELECT username FROM users WHERE id = :id");
@@ -78,11 +78,11 @@
 		public static function filterUser($id) {
 			$db = Db::getInstance();
 			
-			$req = $db->prepare("SELECT bedrijf_id, status FROM users WHERE id = :id");
+			$req = $db->prepare("SELECT bedrijf_id, role FROM users WHERE id = :id");
 			$req->execute(array('id' => $_SESSION["id"]));
 			$res = $req->fetch();
 			$bedrijf_id = $res["bedrijf_id"];
-			$status = $res["status"];
+			$status = $res["role"];
 			
 			$id = intval($id);
 			$req = $db->prepare("SELECT * FROM users WHERE id = :id");
@@ -127,7 +127,7 @@
 					array_push($ticketTitle, $ticket["title"]);
 					array_push($ticketContent, $ticket["description"]);
 					array_push($ticketPriority, $ticket["priority"]);
-					array_push($ticketCategory, $ticket["category"]);
+					array_push($ticketCategory, $ticket["category_id"]);
 					array_push($ticketStatus, $ticket["status"]);
 					
 					$req3 = $db->prepare("SELECT username FROM users WHERE id = :id");
