@@ -17,17 +17,25 @@
 			if(isset($_GET["id"]) && $_GET["id"] != "") {
 				$board_id = $_GET["id"];
 				$role = Ticket::getUserType($_SESSION["id"]);
+				$categories = Ticket::getCategories();
 				require_once("views/tickets/create.php");
 			} else {
 				header("Location: /simpelservice/boards/home");
 			}
 		}
 		
-		public function show() {
-			if(!isset($_GET["id"]))
+		public function edit() {
+			if(!isset($_GET["id"]) || $_GET["id"] == "") {
 				return call('errors', 'error');
-				
+			}
+			if($_POST) {
+				$ticket = Ticket::updateTicket($_GET["id"], $_POST["status"]);
+				header("Location: /simpelservice/baords/home");
+			}
 			
+			$tickets = Ticket::getTicket($_GET["id"]);
+			$categories = Ticket::getCategories();
+			require_once("views/tickets/edit.php");
 		}
 	}
 ?>

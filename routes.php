@@ -34,7 +34,7 @@
 	//Lijst van controller en acties
 	$controllers = array('login' 	=> array('login', 'logout'),
 						 'boards' 	=> array('home', 'filterUser'),
-						 'tickets' 	=> array('create', 'show'),
+						 'tickets' 	=> array('create', 'edit'),
 						 'admin'	=> array('home', 'createCategory', 'createCompany', 'createProject', 'createUser'),
 						 'errors' 	=> array('error'));
 	

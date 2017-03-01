@@ -23,8 +23,9 @@
             
             <label><b>Categorie</b></label>
             <select name="category">
-            	<option value="1">1</option>
-                <option value="2">2</option>
+            	<?php foreach($categories as $category) { ?>
+            	<option value="<?php echo $category[0]; ?>"><?php echo $category[1]; ?></option>
+            	<?php } ?>            
             </select>
             
             <label><b>Prioriteit</b></label>

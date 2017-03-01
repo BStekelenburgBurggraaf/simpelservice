@@ -2,9 +2,10 @@
 	class AdminController {
 		public function home() {
 			$categories = Admin::getCategories();
-			$companies = Admin::getCompanies();
-			$projects = Admin::getProjects();
-			$users = Admin::getUsers();
+			$companies 	= Admin::getCompanies();
+			$projects 	= Admin::getProjects();
+			$users 		= Admin::getUsers();
+			
 			require_once("views/admin/home.php");
 		}
 		
@@ -16,6 +17,7 @@
 			
 			$categories = Admin::getCategories();
 			$companies = Admin::getCompanies();
+			
 			require_once("views/admin/project.php");
 		}
 		
@@ -24,6 +26,7 @@
 				$category = Admin::createCategory($_POST["naam"]);
 				header("Location: /simpelservice/admin/home");
 			}
+			
 			require_once("views/admin/category.php");	
 		}
 		
@@ -32,6 +35,7 @@
 				$company = Admin::createCompany($_POST["name"]);
 				header("Location: /simpelservice/admin/home");
 			}
+			
 			require_once("views/admin/company.php");
 		}
 		
@@ -40,7 +44,9 @@
 				$user = Admin::createUser($_POST["naam"], $_POST["password"], $_POST["email"], $_POST["bedrijf"], $_POST["role"]);
 				header("Location: /simpelservice/admin/home");	
 			}
+			
 			$companies = Admin::getCompanies();
+			
 			require_once("views/admin/user.php");
 		}
 	}
