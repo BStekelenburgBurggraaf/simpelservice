@@ -30,15 +30,15 @@
 			
 			$bedrijf_id = $res["bedrijf_id"];
 			$status = $res["role"];
-			if ($status == "personeel") {
+			if ($status == "personeel" || $status == "admin") {
 				if(!is_null($searchId)){
-					$req = $db->prepare("SELECT * FROM boards WHERE bedrijf_id = :id");
+					$req = $db->prepare("SELECT * FROM boards WHERE id = :id");
 					$req->execute(array('id' => $searchId));
 				} else {
 					$req = $db->query("SELECT * FROM boards");
 				}
 			} else {
-				$req = $db->prepare("SELECT * FROM boards WHERE bedrijf_id = :id");
+				$req = $db->prepare("SELECT * FROM boards WHERE id = :id");
 				$req->execute(array('id' => $bedrijf_id));	
 			}
 			foreach($req->fetchall() as $board) {
@@ -51,8 +51,10 @@
 				$ticketCategory = array();
 				$ticketStatus = array();
 				if($status == "personeel") {
+					$req2 = $db->prepare("SELECT * FROM tickets WHERE board_id = :id AND visibility != 'onzichtbaar'");
+				} elseif($status == "admin") {
 					$req2 = $db->prepare("SELECT * FROM tickets WHERE board_id = :id");
-				} else {
+				}else {
 					$req2 = $db->prepare("SELECT * FROM tickets WHERE board_id = :id AND visibility = 'zichtbaar'");	
 				}
 				$req2->execute(array('id' => $boardId));
@@ -101,7 +103,7 @@
 			$ticketsCount = str_repeat("?, ", count($tickets) -1) . "?";
 			
 			//Variabele worden hier in de query gezet omdat PDO niet goed kan omgaan met arrays en de IN command, dus word deze als volgt opgelost.
-			if ($status == "personeel") {
+			if ($status == "personeel" || $status == "admin") {
 				$req = $db->prepare("SELECT * FROM boards WHERE id IN ($boardsCount)");
 				$req->execute($boards);
 			} else {
@@ -118,8 +120,10 @@
 				$ticketCategory = array();
 				$ticketStatus = array();
 				if($status == "personeel") {
+					$req2 = $db->prepare("SELECT * FROM tickets WHERE board_id = $boardId AND visibility != 'onzichtbaar' AND id IN ($ticketsCount)");
+				} elseif($status == "personeel") {
 					$req2 = $db->prepare("SELECT * FROM tickets WHERE board_id = $boardId AND id IN ($ticketsCount)");
-				} else {
+				}else {
 					$req2 = $db->prepare("SELECT * FROM tickets WHERE board_id = $boardId AND visibility = 'zichtbaar' AND id IN ($ticketsCount)");	
 				}
 				$req2->execute($tickets);

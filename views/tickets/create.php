@@ -43,8 +43,12 @@
             <?php
 			if($role == "personeel" || $role == "admin") {
 				?>
-                <label><b>Onzichtbaar voor klant</b></label><br/>
-                <input type="checkbox" name="visible" value="onzichtbaar" />
+                <label><b>Zichtbaarheid voor klant</b></label><br/>
+                <select name="visible">
+                	<option value="zichtbaar">Zichtbaar voor iedereen</option>
+                    <option value="onzichtbaar-klant">Onzichtbaar voor klanten</option>
+                    <?php if($role == "admin") { ?><option value="onzichtbaar">Onzichtbaar voor iedereen behalve admins</option><?php } ?>
+                </select>
                 <?php
 			}
 			?>
