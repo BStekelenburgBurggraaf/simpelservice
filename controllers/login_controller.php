@@ -7,6 +7,7 @@
 				if($login[0] == "gelukt"){
 					$_SESSION["id"] = $login[1];
 					$_SESSION["log"] = "ja";
+					$_SESSION["logged"] = "logged in";
 					header("Location: /simpelservice/boards/home");
 				}
 				$uname = $_POST["uname"];

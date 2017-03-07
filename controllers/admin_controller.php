@@ -5,11 +5,22 @@
 			$companies 	= Admin::getCompanies();
 			$projects 	= Admin::getProjects();
 			$users 		= Admin::getUsers();
+			$role 		= Admin::getRole($_SESSION["id"]);
+			
+			if($role != "admin") {
+				header("Location: /simpelservice/boards/home");	
+			}
 			
 			require_once("views/admin/home.php");
 		}
 		
 		public function createProject() {
+			$role 		= Admin::getRole($_SESSION["id"]);
+			
+			if($role != "admin") {
+				header("Location: /simpelservice/boards/home");	
+			}
+			
 			if ($_POST) {
 				$project = Admin::createProject($_POST["title"], $_POST["bedrijf"], $_POST["category"]);
 				header("Location: /simpelservice/admin/home");	
@@ -22,6 +33,12 @@
 		}
 		
 		public function createCategory() {
+			$role 		= Admin::getRole($_SESSION["id"]);
+			
+			if($role != "admin") {
+				header("Location: /simpelservice/boards/home");	
+			}
+			
 			if ($_POST) {
 				$category = Admin::createCategory($_POST["naam"]);
 				header("Location: /simpelservice/admin/home");
@@ -31,6 +48,12 @@
 		}
 		
 		public function createCompany() {
+			$role 		= Admin::getRole($_SESSION["id"]);
+			
+			if($role != "admin") {
+				header("Location: /simpelservice/boards/home");	
+			}
+			
 			if ($_POST) {
 				$company = Admin::createCompany($_POST["name"]);
 				header("Location: /simpelservice/admin/home");
@@ -40,6 +63,12 @@
 		}
 		
 		public function createUser() {
+			$role 		= Admin::getRole($_SESSION["id"]);
+			
+			if($role != "admin") {
+				header("Location: /simpelservice/boards/home");	
+			}
+			
 			if ($_POST) {
 				$user = Admin::createUser($_POST["naam"], $_POST["password"], $_POST["email"], $_POST["bedrijf"], $_POST["role"]);
 				header("Location: /simpelservice/admin/home");	

@@ -145,5 +145,16 @@
 			}
 			return $list;
 		}
+		
+		public static function getLoginType($id) {
+			$db = Db::getInstance();
+			
+			$id = intval($id);
+			$req = $db->prepare("SELECT * FROM options WHERE user_id = :id");
+			$req->execute(array('id' => $id));
+			$res = $req->fetch();
+			
+			return $res["display_options"];
+		}
 	}
 ?>

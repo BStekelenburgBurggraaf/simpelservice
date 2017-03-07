@@ -21,6 +21,10 @@
 				require_once("models/admin.php");
 				$controller = new AdminController();
 			break;
+			case 'options':
+				require_once("models/options.php");
+				$controller = new OptionsController();
+			break;
 			
 			case 'errors':
 				$controller = new ErrorsController();
@@ -36,6 +40,7 @@
 						 'boards' 	=> array('home', 'filterUser'),
 						 'tickets' 	=> array('create', 'edit'),
 						 'admin'	=> array('home', 'createCategory', 'createCompany', 'createProject', 'createUser'),
+						 'options' => array('home'),
 						 'errors' 	=> array('error'));
 	
 	//Check of de aangeroepen controller en acties bestaan

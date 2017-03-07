@@ -20,7 +20,7 @@
                 <option <?php if($ticket[6] == "normaal"){ echo "selected"; } ?> value="normaal" selected>Normaal</option>
                 <option <?php if($ticket[6] == "kan wachten"){ echo "selected"; } ?> value="kan wachten">Kan Wachten</option>
             </select>
-            <label><b>Stauts</b></label>
+            <label><b>Status</b></label>
             <select name="status">
             	<option <?php if($ticket[9] == "pending") { echo "selected"; }  ?> value="pending">Pending</option>
                 <option <?php if($ticket[9] == "open") { echo "selected"; }  ?> value="open">Open</option>

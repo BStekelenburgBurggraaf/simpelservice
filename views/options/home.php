@@ -1,9 +1,15 @@
+<?php
+foreach($options as $option){ 
+	$display = $option->displayOptions;
+	$id = $option->id;
+}
+?>
 <div class="wrapper">
     <div class="menu">
     <!--&#8981;-->
     	<ul>
           <li class="dropdown">
-          <?php if(count($boards) > 1) { ?>
+          <?php if(isset($boards) AND count($boards) > 1) { ?>
             <a href="/simpelservice/boards/home" class="dropbtn">Projecten &#9660;</a>
             <div class="dropdown-content">
               <?php 
@@ -37,38 +43,18 @@
     </div>
     <div class="content">
     	<div class="contentWrapper">
-    	<?php
-		foreach($boards as $board) {
-		?>
-            <h1 class="boardTitle"><?php echo $board->boardName; ?></h1>
-            <hr />
-            <table>
-                <tr>
-                    <th>Titel</th> 
-                    <th>Content</th>
-                    <th>Categorie</th>
-                    <th>Prioriteit</th>
-                    <th>Status</th>
-                    <th>Auteur</th>
-                </tr>
-            <?php
-                for ($i = 0; $i < count($board->ticketTitle); $i++) {
-                ?>
-                <tr class="draw meet">
-                    <td class="ticketTitle"><?php echo $board->ticketTitle[$i]; ?></td>
-                    <td class="ticketContent"><?php echo $board->ticketContent[$i]; ?></td>
-                    <td class="ticketCategory"><?php echo $board->ticketCategory[$i]; ?></td>
-                    <td class="ticketPriority"><?php echo $board->ticketPriority[$i]; ?></td>
-                    <td class="ticketStatus"><?php echo $board->ticketStatus[$i]; ?></td>
-                    <td class="ticketAuthor"><?php echo $board->ticketAuthor[$i]; ?></td>
-                </tr>
-                <?php
-                }
-                ?>
-            </table>
-		<?php
-		}
-		?>
+            <h1>Opties</h1>
+            <form  class="log" enctype="multipart/form-data" action="/simpelservice/options/home" method="post">
+            	<div class="container">
+                    <label><b>Weergave projecten bij login</b></label>
+                    <select name="displayOptions">
+                        <option value="show all" <?php if($display == "show all") { echo "selected"; } ?>>Alles</option>
+                        <option value="subscribed" <?php if($display == "subscribed") { echo "selected"; }?>>Alleen gevolgde tickets en projecten</option>
+                    </select>
+                    <input name="id" type="hidden" value="<?php echo $id; ?>" />
+                    <button type="submit">Versturen</button>
+                </div>
+            </form>
         </div>
     </div>
     <div class="news">

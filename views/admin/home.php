@@ -30,6 +30,9 @@
               <a href="/simpelservice/admin/createUser">Nieuwe gebruiker</a>
             </div>
           </li>
+          <li>
+          	<a href="/simpelservice/options/home">Opties</a>
+          </li>
         </ul>
     </div>
     <div class="content">
