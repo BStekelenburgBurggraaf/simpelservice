@@ -1,6 +1,8 @@
 <?php
 	class TicketsController {
+		// /simpelservice/tickets/home/{id}
 		public static function create() {
+			//Check of de form ingevuld en verstuurd is
 			if ($_POST) {
 				if(isset($_FILES) && $_FILES["images"]["name"][0] != '') {
 					$fileNames = Ticket::uploadImages($_FILES);
@@ -14,6 +16,7 @@
 				}
 				$ticket = Ticket::create($_SESSION["id"], $_POST["title"], $_POST["content"], $_POST["category"], $_POST["priority"], $_POST["board_id"], $visible, $fileNames);
 			}
+			//Kijk of er een id is meegegeven, zo niet, stuur dan terug naar het hoofdscherm
 			if(isset($_GET["id"]) && $_GET["id"] != "") {
 				$board_id = $_GET["id"];
 				$role = Ticket::getUserType($_SESSION["id"]);
@@ -22,6 +25,15 @@
 			} else {
 				header("Location: /simpelservice/boards/home");
 			}
+		}
+		
+		public function show() {
+			if(!isset($_GET["id"]) || $_GET["id"] == "") {
+				return call("errors", "error");	
+			}
+			
+			$ticket = Ticket::show($_GET["id"]);
+			require_once("views/tickets/show.php");
 		}
 		
 		public function edit() {

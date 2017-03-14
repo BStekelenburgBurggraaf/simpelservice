@@ -211,6 +211,30 @@
 				//mail($to, $subject, $message, implode("\r\n", $headers));
 			}
 		}
+		
+		public static function show($id) {
+			$db = Db::getInstance();
+			
+			$id = intval($id);
+			$req = $db->prepare("SELECT * FROM tickets WHERE id = :id");
+			$req->execute(array('id' => $id));
+			$res = $req->fetch();
+			
+			$req = $db->prepare("SELECT * FROM bedrijf WHERE id = :id");
+			$req->execute(array('id' => $res["bedrijf_id"]));
+			$company = $req->fetch();
+			
+			$req = $db->prepare("SELECT * FROM categories WHERE id = :id");
+			$req->execute(array('id' => $res["category_id"]));
+			$category = $req->fetch();
+			
+			$req = $db->prepare("SELECT * FROM users WHERE id = :id");
+			$req->execute(array('id' => $res["user_id"]));
+			$author = $req->fetch();
+			
+			$list = new Ticket($id, $company["naam"], $author["username"], $res["title"], $res["description"], $category["title"], $res["priority"], $res["visibility"], $res["files"], $res["status"]);
+			return $list;	
+		}
 			
 		public static function GetUserType($id) {
 			$db = Db::getInstance();

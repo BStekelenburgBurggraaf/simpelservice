@@ -1,5 +1,6 @@
 <?php
 	class Admin {
+		//Maak een project aan
 		public static function createProject($title, $bedrijf, $category) {
 			$db = Db::getInstance();
 			
@@ -7,13 +8,15 @@
 			$req->execute(array('title' => $title, 'bedrijf' => $bedrijf, 'category' => $category));
 		}
 		
+		//Maak een bedrijf aan
 		public static function createCompany($naam) {
 			$db = Db::getInstance();
 			
 			$req = $db->prepare("INSERT INTO bedrijf (naam) VALUES (:naam)");
-			$req->execute(array('naam' => $naam));	
+			$req->execute(array('naam' => $naam));
 		}
 		
+		//Maak een categorie aan
 		public static function createCategory($naam) {
 			$db = Db::getInstance();
 			
@@ -21,6 +24,7 @@
 			$req->execute(array('title' => $naam));
 		}
 		
+		//Maak een user aan
 		public static function createUser($naam, $password, $email, $bedrijf, $role) {
 			$db = Db::getInstance();
 			
@@ -28,6 +32,7 @@
 			$req->execute(array('naam' => $naam, 'email' => $email, 'password' => $password, 'role' => $role, 'bedrijf' => $bedrijf));
 		}
 		
+		//Haal categorieën op
 		public static function getCategories() {
 			$db = Db::getInstance();
 			
@@ -36,9 +41,10 @@
 			foreach($req->fetchAll() as $row) {
 				$list[] = array($row["id"], $row["title"]);
 			}
-			return $list;
+			return $list;  	
 		}
 		
+		//Haal bedrijven op
 		public static function getCompanies() {
 			$db = Db::getInstance();
 			
@@ -50,6 +56,7 @@
 			return $list;
 		}
 		
+		//Haal projecten op
 		public static function getProjects() {
 			$db = Db::getInstance();
 			
@@ -69,6 +76,7 @@
 			return $list;
 		}
 		
+		//Haal gebruikers op
 		public static function getUsers() {
 			$db = Db::getInstance();
 			
@@ -84,6 +92,7 @@
 			return $list;
 		}
 		
+		//Haal de rol van de huidige gebruiker op
 		public static function getRole($id) {
 			$db = Db::getInstance();
 			

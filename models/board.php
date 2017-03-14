@@ -42,14 +42,14 @@
 				$req->execute(array('id' => $bedrijf_id));	
 			}
 			foreach($req->fetchall() as $board) {
-				$boardName = $board["title"];
-				$boardId = $board["id"];
-				$ticketTitle = array();
-				$ticketContent = array();
+				$boardName 		= $board["title"];
+				$boardId 		= $board["id"];
+				$ticketTitle 	= array();
+				$ticketContent 	= array();
 				$ticketPriority = array();
-				$ticketAuthor = array();
+				$ticketAuthor 	= array();
 				$ticketCategory = array();
-				$ticketStatus = array();
+				$ticketStatus 	= array();
 				if($status == "personeel") {
 					$req2 = $db->prepare("SELECT * FROM tickets WHERE board_id = :id AND visibility != 'onzichtbaar'");
 				} elseif($status == "admin") {
