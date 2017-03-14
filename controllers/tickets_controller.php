@@ -33,6 +33,10 @@
 			}
 			
 			$ticket = Ticket::show($_GET["id"]);
+			$role = Ticket::getUserType($_SESSION["id"]);
+			if ($role == "admin") {
+				$subscribedUsers = Ticket::getSubscribedUsers($_GET["id"]);
+			}
 			require_once("views/tickets/show.php");
 		}
 		

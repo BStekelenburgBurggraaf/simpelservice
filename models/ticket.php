@@ -266,5 +266,27 @@
 			}
 			return $list;
 		}
+		
+		public static function getSubscribedUsers($id){
+			$db = Db::getInstance();
+			
+			$id = intval($id);
+			$list = array();
+			$req = $db->prepare("SELECT * FROM users WHERE ticket_subscriptions LIKE '% $id,%'");
+			$req->execute();
+			foreach($req->fetchAll() as $user) {
+				$userId = $user["id"];
+				$username = $user["username"];
+				$userRole = $user["role"];
+				
+				$req = $db->prepare("SELECT * FROM bedrijf WHERE id = :id");
+				$req->execute(array('id' => $user["bedrijf_id"]));
+				$bedrijf = $req->fetch();
+				
+				$userBedrijf = $bedrijf["naam"];
+				$list[] = array($userId, $username, $userBedrijf, $userRole);
+			}
+			return $list;
+		}
 	}
 ?>	
