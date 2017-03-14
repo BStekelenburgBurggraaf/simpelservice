@@ -6,6 +6,15 @@
 			
 			$req = $db->prepare("INSERT INTO boards (title, bedrijf_id, category_id) VALUES (:title, :bedrijf, :category)");
 			$req->execute(array('title' => $title, 'bedrijf' => $bedrijf, 'category' => $category));
+			$id = $db->lastInsertId();
+			
+			$req = $db->prepare("SELECT * FROM users WHERE id = 1");
+			$req->execute();
+			$res = $req->fetch();
+			$boards = $res["board_subscriptions"] . " " . $id . ",";
+			
+			$req = $db->prepare("UPDATE users SET board_subscriptions = :boards WHERE id = 1");
+			$req->execute(array('boards' => $boards));
 		}
 		
 		//Maak een bedrijf aan

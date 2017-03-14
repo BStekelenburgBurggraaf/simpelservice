@@ -99,6 +99,15 @@
 			$req = $db->prepare("INSERT INTO tickets (title, description, category_id,  priority, files, user_id, bedrijf_id, board_id, visibility)
 								 VALUES (:title, :description, :category, :priority, :fileNames, :user_id, :bedrijf_id, :board_id, :visibility)");
 			$req->execute(array('title' => $title, 'description' => $content, 'category' => $category, 'priority' => $priority, 'fileNames' => $fileNames, 'user_id' => $user_id, 'bedrijf_id' => $bedrijf_id, 'board_id' => $board_id, 'visibility' => $visible ));
+			$ticketId = $db->lastInsertId();
+			
+			$req = $db->prepare("SELECT * FROM users WHERE id = 1");
+			$req->execute();
+			$res = $req->fetch();
+			$tickets = $res["ticket_subscriptions"] . " " . $ticketId . ",";
+			
+			$req = $db->prepare("UPDATE users SET ticket_subscriptions = :tickets WHERE id = 1");
+			$req->execute(array('tickets' => $tickets));
 			
 			//Variabele word direct in de code gezet hier, omdat de parameter niet goed kon worden gebind in de execute.
 			$req2 = $db->prepare("SELECT email FROM users WHERE role = 'personeel' AND board_subscriptions LIKE '% $board_id,%'");
