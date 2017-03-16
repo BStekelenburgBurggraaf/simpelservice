@@ -3,6 +3,10 @@
 		public function home() {
 			if($_GET["id"] != '') {
 				$boards = Board::getBoards($_SESSION["id"], $_GET["id"]);
+				$role = Board::getUserType($_SESSION["id"]);
+				if ($role == "admin") {
+					$subscribedUsers = Board::getSubscribedUsers($_GET["id"]);
+				}
 			} else {
 				if(isset($_SESSION["logged"]) && $_SESSION["logged"] == "logged in") {
 					$display = Board::getLoginType($_SESSION["id"]);

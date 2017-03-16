@@ -132,6 +132,7 @@
 					array_push($ticketContent, $ticket["description"]);
 					array_push($ticketPriority, $ticket["priority"]);
 					array_push($ticketCategory, $ticket["category_id"]);
+		
 					array_push($ticketStatus, $ticket["status"]);
 					
 					$req3 = $db->prepare("SELECT username FROM users WHERE id = :id");
@@ -155,6 +156,39 @@
 			$res = $req->fetch();
 			
 			return $res["display_options"];
+		}
+		
+		public static function getUserType($id) {
+			$db = Db::getInstance();
+			
+			$id = intval($id);
+			$req = $db->prepare("SELECT role FROM users WHERE id = :id");
+			$req->execute(array('id' => $id));
+			$res = $req->fetch();
+			
+			return $res["role"];	
+		}
+		
+		public static function getSubscribedUsers($id){
+			$db = Db::getInstance();
+			
+			$id = intval($id);
+			$list = array();
+			$req = $db->prepare("SELECT * FROM users WHERE board_subscriptions LIKE '% $id,%'");
+			$req->execute();
+			foreach($req->fetchAll() as $user) {
+				$userId = $user["id"];
+				$username = $user["username"];
+				$userRole = $user["role"];
+				
+				$req = $db->prepare("SELECT * FROM bedrijf WHERE id = :id");
+				$req->execute(array('id' => $user["bedrijf_id"]));
+				$bedrijf = $req->fetch();
+				
+				$userBedrijf = $bedrijf["naam"];
+				$list[] = array($userId, $username, $userBedrijf, $userRole);
+			}
+			return $list;
 		}
 	}
 ?>

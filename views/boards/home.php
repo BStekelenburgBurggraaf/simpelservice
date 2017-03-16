@@ -68,7 +68,30 @@
             </table>
 		<?php
 		}
-		?>
+		if($role == "admin" && !empty($subscribedUsers)) { ?>
+            	<h1>Users met een subscriptie</h1>
+                <hr/><br/>
+                <table>
+                	<tr>
+                    	<th>Id</th>
+                        <th>Naam</th>
+                        <th>Bedrijf</th>
+                        <th>Rol</th>
+                    </tr>
+                    <?php
+					foreach($subscribedUsers as $user) { 
+					?>
+                    <tr>
+                    	<td><?php echo $user[0]; ?></td>
+                        <td><?php echo $user[1]; ?></td>
+                        <td><?php echo $user[2]; ?></td>
+                        <td><?php echo $user[3]; ?></td>
+                    </tr>
+                    <?php
+					}
+					?>
+                </table>
+            <?php } ?>
         </div>
     </div>
     <div class="news">
