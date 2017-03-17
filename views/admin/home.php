@@ -37,15 +37,28 @@
     </div>
     <div class="content">
     	<div class="contentWrapper">
-            <h1>Categorieën</h1>
+            <h1>Categorieën Projecten</h1>
             <table>
                 <tr>
                     <th>ID</th>
                     <th>Naam</th>
                 </tr>
-                <?php foreach($categories as $category) {?>
+                <?php foreach($categoriesProjects as $category) {?>
                 <tr>
                     <td><?php echo $category[0]; ?></td>
+                    <td><?php echo $category[1]; ?></td>
+                </tr>
+                <?php } ?>
+            </table>
+            <h1>Categorieën Tickets</h1>
+            <table>
+            	<tr>
+                	<th>ID</th>
+                    <th>Naam</th>
+                </tr>
+                <?php foreach($categoriesTickets as $category) { ?>
+                <tr>
+                	<td><?php echo $category[0]; ?></td>
                     <td><?php echo $category[1]; ?></td>
                 </tr>
                 <?php } ?>

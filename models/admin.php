@@ -26,11 +26,12 @@
 		}
 		
 		//Maak een categorie aan
-		public static function createCategory($naam) {
+		public static function createCategory($naam, $type) {
 			$db = Db::getInstance();
 			
-			$req = $db->prepare("INSERT INTO categories (title) VALUES (:title)");
-			$req->execute(array('title' => $naam));
+			$type = intval($type);
+			$req = $db->prepare("INSERT INTO categories (title, type) VALUES (:title, :type)");
+			$req->execute(array('title' => $naam, 'type' => $type));
 		}
 		
 		//Maak een user aan
@@ -42,11 +43,12 @@
 		}
 		
 		//Haal categorieën op
-		public static function getCategories() {
+		public static function getCategories($id) {
 			$db = Db::getInstance();
 			
-			$req = $db->prepare("SELECT * FROM categories");
-			$req->execute();
+			$id = intval($id);
+			$req = $db->prepare("SELECT * FROM categories WHERE type = :id");
+			$req->execute(array('id' => $id));
 			foreach($req->fetchAll() as $row) {
 				$list[] = array($row["id"], $row["title"]);
 			}

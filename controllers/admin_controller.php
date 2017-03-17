@@ -2,7 +2,8 @@
 	class AdminController {
 		// /simpelservice/admin/home
 		public function home() {
-			$categories = Admin::getCategories();
+			$categoriesProjects = Admin::getCategories(1);
+			$categoriesTickets 	= Admin::getCategories(0);
 			$companies 	= Admin::getCompanies();
 			$projects 	= Admin::getProjects();
 			$users 		= Admin::getUsers();
@@ -31,15 +32,15 @@
 				header("Location: /simpelservice/admin/home");	
 			}
 			
-			$categories = Admin::getCategories();
+			$categories = Admin::getCategories(1);
 			$companies = Admin::getCompanies();
 			
 			require_once("views/admin/project.php");
 		}
 		
-		// /simpelservice/admin/createCategory
+		// /simpelservice/admin/createCategory/{identifier}
 		public function createCategory() {
-			$role 		= Admin::getRole($_SESSION["id"]);
+			$role = Admin::getRole($_SESSION["id"]);
 			
 			//Check of de user admin is, anders stuur terug naar boards.
 			if($role != "admin") {
@@ -48,7 +49,7 @@
 			
 			//Als het form verstuurd is, maak de categorie aan en stuur dan terug naar /simpelservice/admin/home
 			if ($_POST) {
-				$category = Admin::createCategory($_POST["naam"]);
+				$category = Admin::createCategory($_POST["naam"], $_POST["type"]);
 				header("Location: /simpelservice/admin/home");
 			}
 			

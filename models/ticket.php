@@ -259,7 +259,7 @@
 		public static function getCategories() {
 			$db = Db::getInstance();
 			
-			$req = $db->prepare("SELECT * FROM categories");
+			$req = $db->prepare("SELECT * FROM categories WHERE type = 0");
 			$req->execute();
 			foreach($req->fetchAll() as $row) {
 				$list[] = array($row["id"], $row["title"]);
