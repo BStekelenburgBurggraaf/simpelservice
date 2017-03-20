@@ -45,8 +45,12 @@
 				return call('errors', 'error');
 			}
 			if($_POST) {
-				$ticket = Ticket::updateTicket($_GET["id"], $_POST["status"]);
-				header("Location: /simpelservice/baords/home");
+				if(isset($_POST["closeDescription"])){
+					$ticket = Ticket::updateTicket($_GET["id"], $_POST["status"], $_POST["closeDescription"]);
+				} else {
+					$ticket = Ticket::updateTicket($_GET["id"], $_POST["status"], '');
+				}
+				header("Location: /simpelservice/boards/home");
 			}
 			
 			$tickets = Ticket::getTicket($_GET["id"]);

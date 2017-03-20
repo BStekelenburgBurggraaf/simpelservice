@@ -21,13 +21,16 @@
                 <option <?php if($ticket[6] == "kan wachten"){ echo "selected"; } ?> value="kan wachten">Kan Wachten</option>
             </select>
             <label><b>Status</b></label>
-            <select name="status">
+            <select id="status" name="status" onchange="closed()">
             	<option <?php if($ticket[9] == "pending") { echo "selected"; }  ?> value="pending">Pending</option>
                 <option <?php if($ticket[9] == "open") { echo "selected"; }  ?> value="open">Open</option>
                 <option <?php if($ticket[9] == "mee bezig") { echo "selected"; }  ?> value="mee bezig">Mee bezig</option>
                 <option <?php if($ticket[9] == "testen") { echo "selected"; }  ?> value="testen">Testen</option>
                 <option <?php if($ticket[9] == "closed") { echo "selected"; }  ?> value="closed">Gesloten</option>
             </select>
+            <div id="form">
+            
+            </div>
             <label><b>Images:</b></label>
             <div id="dynamicInput">
             	<?php
@@ -45,4 +48,32 @@
       	<div class="container" style="background-color:#f1f1f1">
       	</div>
 	</form>
+    <script>
+	function closed() {
+		var frm = document.getElementById("form");
+		var	sts = document.getElementById("status");
+		if(sts[sts.selectedIndex].value=="closed")  {
+			var lbl = document.createElement("label");
+			var bld = document.createElement("b");
+			var t = document.createTextNode("Omschrijving van sluiten");
+			lbl.setAttribute("id", "labelDesc");
+			bld.appendChild(t);
+			lbl.appendChild(bld);
+			form.appendChild(lbl);
+			
+			var txt = document.createElement("textarea");
+			txt.setAttribute("id", "closeDesc");
+			txt.setAttribute("required", "required");
+			txt.setAttribute("name", "closeDescription");
+			form.appendChild(txt); 
+		} else {
+			var txt = document.getElementById("closeDesc");
+			var lbl = document.getElementById("labelDesc");
+			if(txt != null && lbl != null) {
+				frm.removeChild(lbl);
+				frm.removeChild(txt);
+			}
+		}
+	}
+	</script>
 <?php } ?>

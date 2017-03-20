@@ -68,7 +68,7 @@
             </table>
 		<?php
 		}
-		if($role == "admin" && !empty($subscribedUsers)) { ?>
+		if(isset($role) && $role == "admin" && !empty($subscribedUsers)) { ?>
             	<h1>Users met een subscriptie</h1>
                 <hr/><br/>
                 <table>
