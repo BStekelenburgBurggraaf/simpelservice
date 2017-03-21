@@ -180,48 +180,8 @@
 			$req->execute(array('status' => $status, 'id' => $id));
 			
 			if($status == "closed") {
-				//Haal gegevens van ticket op
-				$req3 = $db->prepare("SELECT * FROM tickets WHERE id = :id");
-				$req3->execute(array('id' => $id));
-				$res = $req3->fetch();
-				
 				$req = $db->prepare("INSERT INTO updates (description, board_id, ticket_id, user_id) VALUES (:description, :board, :ticket, :user)");
 				$req->execute(array('description' => $updateDescription, 'board' => $res["board_id"], 'ticket' => $id, 'user' => $_SESSION["id"]));
-				
-				//Variabele word direct in de code gezet hier, omdat de parameter niet goed kon worden gebind in de execute.
-				$req2 = $db->prepare("SELECT email FROM users WHERE ticket_subscriptions LIKE '% $id,%'");
-				$req2->execute();
-				//Teller zodat alleen de eerste geen comma zal bevatten.
-				$i = 0;
-				$to = "";
-				foreach($req2->fetchAll() as $user) {
-					if ($i == 0) {
-						$to = $user["email"];
-						$i = 1;
-					} else { 
-						$to .= ", " . $user["email"];
-					}
-				}
-				
-				$subject = "Ticket gesloten: " . $res["title"];
-				$message = '
-				<html>
-				<head>
-				  <title>New ticket: '.$res["title"].'</title>
-				</html>
-				<body>
-				  <h3>'. $res["title"] .'</h3>
-				  <hr>
-				  <p><b>Content:</b><br/>'.$res["description"].'</br>
-				  <p><b>Status:</b><br/>'.$res["status"].'</br>
-				</body>
-				';
-				
-				$headers[] = 'MIME-Version: 1.0';
-				$headers[] = 'Content-type: text/html; charset=iso-8859-1';
-				$headers[] = 'From: SimpelService <b.stekelenburg@burggraaf.nl>';
-				
-				//mail($to, $subject, $message, implode("\r\n", $headers));
 			}
 		}
 		
@@ -290,6 +250,35 @@
 				$userBedrijf = $bedrijf["naam"];
 				$list[] = array($userId, $username, $userBedrijf, $userRole);
 			}
+			return $list;
+		}
+		
+		public static function getMailInfo($id) {
+			$db = Db::getInstance();
+			
+			$id = intval($id);
+			
+			//Haal gegevens van ticket op
+			$req = $db->prepare("SELECT * FROM tickets WHERE id = :id");
+			$req->execute(array('id' => $id));
+			$res = $req->fetch();
+			
+			//Variabele word direct in de code gezet hier, omdat de parameter niet goed kon worden gebind in de execute.
+			$req = $db->prepare("SELECT email FROM users WHERE ticket_subscriptions LIKE '% $id,%'");
+			$req->execute();
+			//Teller zodat alleen de eerste geen comma zal bevatten.
+			$i = 0;
+			$to = "";
+			foreach($req->fetchAll() as $user) {
+				if ($i == 0) {
+					$to = $user["email"];
+					$i = 1;
+				} else { 
+					$to .= ", " . $user["email"];
+				}
+			}
+			
+			$list = array("title" => $res["title"], "description" => $res["description"], "status" => $res["status"], "to" => $to);
 			return $list;
 		}
 	}

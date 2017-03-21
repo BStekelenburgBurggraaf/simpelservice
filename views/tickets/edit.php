@@ -31,6 +31,9 @@
             <div id="form">
             
             </div>
+            <label><b>Stuur mail naar alle users met een subscriptie</b></label><br/>
+            <input type="checkbox" name="mail" value="yes" /><br/>
+            <span class="subtext">Dit wordt automatisch gedaan bij gesloten tickets</span><br/>
             <label><b>Images:</b></label>
             <div id="dynamicInput">
             	<?php
@@ -65,7 +68,7 @@
 			txt.setAttribute("id", "closeDesc");
 			txt.setAttribute("required", "required");
 			txt.setAttribute("name", "closeDescription");
-			form.appendChild(txt); 
+			form.appendChild(txt);
 		} else {
 			var txt = document.getElementById("closeDesc");
 			var lbl = document.getElementById("labelDesc");

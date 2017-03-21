@@ -47,8 +47,37 @@
 			if($_POST) {
 				if(isset($_POST["closeDescription"])){
 					$ticket = Ticket::updateTicket($_GET["id"], $_POST["status"], $_POST["closeDescription"]);
+					$mail = Ticket::getMailInfo($_GET["id"]);
 				} else {
 					$ticket = Ticket::updateTicket($_GET["id"], $_POST["status"], '');
+					if (isset($_POST["mail"])) {
+						$mail = Ticket::getMailInfo($_GET["id"]);	
+					}
+				}
+				if(isset($mail)) {
+					$to = $mail["to"];
+					if ($mail["status"] == "closed") {
+						$subject = "Ticket gesloten: " . $mail["title"];
+					} else {
+						$subject = "Ticket gewijzigd: " . $mail["title"];	
+					}
+					$message = '
+					<html>
+					<head>
+					  <title>Update ticket: '.$mail["title"].'</title>
+					</html>
+					<body>
+					  <h3>'. $mail["title"] .'</h3>
+					  <hr>
+					  <p><b>Content:</b><br/>'.$mail["description"].'</br>
+					  <p><b>Status:</b><br/>'.$mail["status"].'</br>
+					</body>
+					';
+					
+					$headers[] = 'MIME-Version: 1.0';
+					$headers[] = 'Content-type: text/html; charset=iso-8859-1';
+					$headers[] = 'From: SimpelService <b.stekelenburg@burggraaf.nl>';
+					//mail($to, $subject, $message, implode("\r\n", $headers));	
 				}
 				header("Location: /simpelservice/boards/home");
 			}
