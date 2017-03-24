@@ -88,6 +88,7 @@
 					}
 					?>
                 </table>
+                <a href="/simpelservice/tickets/addUsers/<?php echo $_GET["id"]; ?>">Voeg een nieuwe user toe</a>
             </div>
             <?php } ?>
         </div>

@@ -281,5 +281,60 @@
 			$list = array("title" => $res["title"], "description" => $res["description"], "status" => $res["status"], "to" => $to);
 			return $list;
 		}
+		
+		public static function getTicketCompany($id) {
+			$db = Db::getInstance();
+			
+			$id = intval($id);
+			
+			$req = $db->prepare("SELECT bedrijf_id FROM tickets WHERE id = :id");	
+			$req->execute(array('id' => $id));
+			$res = $req->fetch();
+			return $res;
+		}
+		
+		public static function getEmployees($id) {
+			$db = Db::getInstance();
+			
+			$id = intval($id);
+			if($id == 1) {
+				$req = $db->prepare("SELECT * FROM users WHERE bedrijf_id = :id");
+			} else {
+				$req = $db->prepare("SELECT * FROM users WHERE bedrijf_id = :id OR bedrijf_id = 1");	
+			}
+			$req->execute(array('id' => $id));
+			foreach($req->fetchAll() as $user) {
+				$req = $db->prepare("SELECT * FROM bedrijf WHERE id = :id");
+				$req->execute(array('id' => $user["bedrijf_id"]));
+				$res = $req->fetch();
+				
+				$list[] = array($user["id"], $user["username"], $user["role"], $res["naam"], $user["ticket_subscriptions"]);
+			}
+			return $list;
+		}
+		
+		public static function updateSubscribers($id, $check) {
+			$db = Db::getInstance();
+			for($i = 0; $i < count($id); $i++) {
+				$req = $db->prepare("SELECT ticket_subscriptions FROM users WHERE id = :id");
+				$req->execute(array('id' => $id[$i]));
+				$res = $req->fetch();
+				$subscriptions = $res["ticket_subscriptions"];
+				$ticketId = " ".$_GET["id"].",";
+				if($check[$i] == "false"){
+					if(strpos($subscriptions, $ticketId) !== false) {
+						$subscriptions = str_replace($ticketId, "", $subscriptions);
+						$req = $db->prepare("UPDATE users SET ticket_subscriptions = :subscriptions WHERE id = :id");
+						$req->execute(array('subscriptions' => $subscriptions, 'id' => $id[$i]));
+					}
+				} elseif($check[$i] == "true") {
+					if(strpos($subscriptions, $ticketId) === false) {
+						$subscriptions = $subscriptions	. $ticketId;
+						$req = $db->prepare("UPDATE users SET ticket_subscriptions = :subscriptions WHERE id = :id");
+						$req->execute(array('subscriptions' => $subscriptions, 'id' => $id[$i]));
+					}
+				}
+			}
+		}
 	}
 ?>	

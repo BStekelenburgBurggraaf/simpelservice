@@ -86,5 +86,14 @@
 			$categories = Ticket::getCategories();
 			require_once("views/tickets/edit.php");
 		}
+		
+		public function addUsers() {
+			if ($_POST) {
+				Ticket::updateSubscribers($_POST["result"]["id"], $_POST["result"]["checked"]);
+			}
+			$ticket = Ticket::getTicketCompany($_GET["id"]);
+			$users = Ticket::getEmployees($ticket[0]);
+			require_once("views/tickets/addUsers.php");
+		}
 	}
 ?>
