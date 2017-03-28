@@ -24,6 +24,7 @@
 			$this->status		= $status;
 		}
 		
+		//Uploaden van een image en deze in de juiste folder plaatsen. Mogelijk verplaatsen van model naar controller?
 		public static function uploadImages($files) {
 			$file_count = count($files["images"]["name"]);
 			$list = '';
@@ -84,6 +85,7 @@
 			return $list;
 		}
 		
+		//Het aanmaken van een ticket
 		public static function create($user_id, $title, $content, $category, $priority, $board_id, $visible, $fileNames) {
 			$db = Db::getInstance();
 			
@@ -150,6 +152,7 @@
 			//mail($to, $subject, $message, implode("\r\n", $headers));
 		}
 		
+		//Het ophalen van een ticket
 		public static function getTicket($id) {
 			$db = Db::getInstance();
 			
@@ -172,6 +175,7 @@
 			return $list;
 		}
 		
+		//Het updaten van een ticket nadat deze is aangepast
 		public static function updateTicket($id, $status, $updateDescription) {
 			$db = Db::getInstance();
 			
@@ -185,6 +189,7 @@
 			}
 		}
 		
+		//Het ophalen van een ticket
 		public static function show($id) {
 			$db = Db::getInstance();
 			
@@ -208,7 +213,8 @@
 			$list = new Ticket($id, $company["naam"], $author["username"], $res["title"], $res["description"], $category["title"], $res["priority"], $res["visibility"], $res["files"], $res["status"]);
 			return $list;	
 		}
-			
+		
+		//Haal het type van de user op	
 		public static function GetUserType($id) {
 			$db = Db::getInstance();
 			
@@ -220,6 +226,7 @@
 			return $res["role"];	
 		}
 		
+		//Haal de categorieën op
 		public static function getCategories() {
 			$db = Db::getInstance();
 			
@@ -231,6 +238,7 @@
 			return $list;
 		}
 		
+		//Haal de users op die bij de ticket aangemeld staan
 		public static function getSubscribedUsers($id){
 			$db = Db::getInstance();
 			
@@ -253,6 +261,7 @@
 			return $list;
 		}
 		
+		//Haal de informatie van een email op
 		public static function getMailInfo($id) {
 			$db = Db::getInstance();
 			
@@ -282,6 +291,7 @@
 			return $list;
 		}
 		
+		//Haal het bedrijf van de ticket op
 		public static function getTicketCompany($id) {
 			$db = Db::getInstance();
 			
@@ -293,6 +303,7 @@
 			return $res;
 		}
 		
+		//Haal de users op van zowel Burggraaf It, en de users van het bedrijf, als deze hetzelfde zijn, alleen Burggraaf It
 		public static function getEmployees($id) {
 			$db = Db::getInstance();
 			
@@ -313,6 +324,7 @@
 			return $list;
 		}
 		
+		//Het updaten van de aangemelde users bij een ticket
 		public static function updateSubscribers($id, $check) {
 			$db = Db::getInstance();
 			for($i = 0; $i < count($id); $i++) {

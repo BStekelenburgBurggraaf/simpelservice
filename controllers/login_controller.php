@@ -1,5 +1,6 @@
 <?php
 	class LoginController {
+		//simpelservice/login/login
 		public function login() {
 			if($_POST) {
 				//Voer getLogin uit die in het login model staat

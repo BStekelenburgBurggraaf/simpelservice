@@ -1,5 +1,6 @@
 <?php
 	class Login {
+		//De post van de login
 		public static function getLogin($username, $password){
 			if($username != '' && $password != '')
 			{

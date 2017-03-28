@@ -1,6 +1,7 @@
 <?php
 	require_once("connection.php");
 	
+	//Als er geen controller en action in de controller staan, ga dan naar de login pagina.
 	if(isset($_GET["controller"]) && isset($_GET["action"])) {
 		$controller = $_GET["controller"];
 		$action = $_GET["action"];	

@@ -27,7 +27,9 @@
 			}
 		}
 		
+		//simpelservice/tickets/show/x, x is hier niet optioneel
 		public function show() {
+			//als er geen id in de url staat, stuur dan door naar de error pagina.
 			if(!isset($_GET["id"]) || $_GET["id"] == "") {
 				return call("errors", "error");	
 			}
@@ -40,7 +42,9 @@
 			require_once("views/tickets/show.php");
 		}
 		
+		//simpelservice/tickets/edit/x, x is hier niet optioneel
 		public function edit() {
+			//als er geen id in de url staat, stuur dan door naar de error pagina.
 			if(!isset($_GET["id"]) || $_GET["id"] == "") {
 				return call('errors', 'error');
 			}
@@ -56,6 +60,7 @@
 				}
 				if(isset($mail)) {
 					$to = $mail["to"];
+					//Kijken of de mail nog open is, of gesloten is
 					if ($mail["status"] == "closed") {
 						$subject = "Ticket gesloten: " . $mail["title"];
 					} else {
@@ -87,8 +92,10 @@
 			require_once("views/tickets/edit.php");
 		}
 		
+		//simpelservice/tickets/addUsers/x, x is hier niet optioneel
 		public function addUsers() {
 			if ($_POST) {
+				//Result bevat zowel een array van ids, als een array van checks.
 				Ticket::updateSubscribers($_POST["result"]["id"], $_POST["result"]["checked"]);
 			}
 			$ticket = Ticket::getTicketCompany($_GET["id"]);

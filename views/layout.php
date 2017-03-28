@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="/simpelservice/css/form.css">
     <link rel="stylesheet" type="text/css" href="/simpelservice/css/board.css">
     <script src="/simpelservice/jquery/jquery-3.2.0.min.js"></script>
-	<title>Untitled Document</title>
+	<title>SimpelService</title>
 </head>
 
 <body>

@@ -8,6 +8,7 @@
 			$this->id				= $id;
 		}
 		
+		//Haal de opties van een user op
 		public static function getOptions($id) {
 			$db = Db::getInstance();
 			
@@ -20,6 +21,7 @@
 			return $list;
 		}
 		
+		//Wijzig de opties van een user
 		public static function updateOptions($id, $displayOptions) {
 			$db = Db::getInstance();
 			

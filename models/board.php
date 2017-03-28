@@ -20,6 +20,7 @@
 			$this->ticketStatus		= $ticketStatus;
 		}
 		
+		//Haal de projecten op, id moet geset zijn, searchId hoeft niet persé, dit is voor specifieke projecten
 		public static function getBoards($id, $searchId = NULL) {
 			$db = Db::getInstance();
 			
@@ -77,6 +78,7 @@
 			return $list; 
 		}
 		
+		//Filter projecten en tickets op een user, zo zie je alleen de tickets en projecten waar deze user bij is aangemeld, en je zelf kan zien. Voorbeeld: User van bedrijf B kan van personeel van Burggraaf It niet projecten van bedrijf A zien als deze op het personeel filtert.
 		public static function filterUser($id) {
 			$db = Db::getInstance();
 			
@@ -113,12 +115,14 @@
 			foreach($req->fetchall() as $board) {
 				$boardName = $board["title"];
 				$boardId = $board["id"];
+				//set arrays voor individuele tickets
 				$ticketTitle = array();
 				$ticketContent = array();
 				$ticketPriority = array();
 				$ticketAuthor = array();
 				$ticketCategory = array();
 				$ticketStatus = array();
+				//Herhaald, PDO kan niet goed omgaan met arrays in SQL IN ()
 				if($status == "personeel") {
 					$req2 = $db->prepare("SELECT * FROM tickets WHERE board_id = $boardId AND visibility != 'onzichtbaar' AND id IN ($ticketsCount)");
 				} elseif($status == "personeel") {
@@ -147,6 +151,7 @@
 			return $list;
 		}
 		
+		//Haal het login type op, dit word alleen gebruikt direct na het inloggen
 		public static function getLoginType($id) {
 			$db = Db::getInstance();
 			
@@ -158,6 +163,7 @@
 			return $res["display_options"];
 		}
 		
+		//Haal op welk type user het is
 		public static function getUserType($id) {
 			$db = Db::getInstance();
 			
@@ -169,11 +175,13 @@
 			return $res["role"];	
 		}
 		
+		//Haal alle subscribed users op bij een project
 		public static function getSubscribedUsers($id){
 			$db = Db::getInstance();
 			
 			$id = intval($id);
 			$list = array();
+			//Het ID meegeven als :id en dan binden werkte hier neit, dus heb ik gekozen om de variabele gewoon in de query te zetten
 			$req = $db->prepare("SELECT * FROM users WHERE board_subscriptions LIKE '% $id,%'");
 			$req->execute();
 			foreach($req->fetchAll() as $user) {
