@@ -100,7 +100,12 @@
 			}
 			$ticket = Ticket::getTicketCompany($_GET["id"]);
 			$users = Ticket::getEmployees($ticket[0]);
-			require_once("views/tickets/addUsers.php");
+			$role = Ticket::getUserType($_SESSION["id"]);
+			if($role == "admin") {
+				require_once("views/tickets/addUsers.php");
+			} else {
+				header("Location: /simpelservice/boards/home");	
+			}
 		}
 	}
 ?>

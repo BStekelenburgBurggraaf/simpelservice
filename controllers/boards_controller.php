@@ -2,6 +2,7 @@
 	class BoardsController {
 		//simpelservice/boards/home/{x}, x is optioneel
 		public function home() {
+			$role = Board::getUserType($_SESSION["id"]);
 			if($_GET["id"] != '') {
 				$boards = Board::getBoards($_SESSION["id"], $_GET["id"]);
 				$role = Board::getUserType($_SESSION["id"]);

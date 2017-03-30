@@ -28,7 +28,7 @@
               <a href="/simpelservice/admin/createCompany">Nieuw bedrijf</a>
               <a href="/simpelservice/admin/createCategory">Nieuwe cateogrie</a>
               <a href="/simpelservice/admin/createUser">Nieuwe gebruiker</a>
-            </div>
+            </div>	
           </li>
           <li>
           	<a href="/simpelservice/options/home">Opties</a>
@@ -50,6 +50,10 @@
                     <th>Prioriteit</th>
                     <th>Status</th>
                     <th>Auteur</th>
+                    <th></th>
+                    <?php if($role == "admin" || $role == "personeel") { ?>
+						<th></th>
+					<?php } ?>
                 </tr>
             <?php
                 for ($i = 0; $i < count($board->ticketTitle); $i++) {
@@ -61,6 +65,10 @@
                     <td class="ticketPriority"><?php echo $board->ticketPriority[$i]; ?></td>
                     <td class="ticketStatus"><?php echo $board->ticketStatus[$i]; ?></td>
                     <td class="ticketAuthor"><?php echo $board->ticketAuthor[$i]; ?></td>
+                    <td><a href="/simpelservice/tickets/show/<?php echo $board->ticketId[$i]; ?>">Details</a></td>
+                    <?php if ($role == "admin" || "personeel") { ?>
+                    <td><a href="/simpelservice/tickets/edit/<?php echo $board->ticketId[$i]; ?>">Aanpassen</a></td>
+                    <?php } ?>
                 </tr>
                 <?php
                 }

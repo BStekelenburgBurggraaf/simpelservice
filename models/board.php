@@ -8,8 +8,10 @@
 		public $ticketPriority 	= array();
 		public $ticketCategory	= array();
 		public $ticketStatus	= array();
+		public $ticketUserId	= array();
+		public $ticketId		= array();
 		
-		public function __construct($boardName, $ticketTitle, $ticketContent, $ticketAuthor, $ticketPriority, $ticketCategory, $ticketStatus, $boardId) {
+		public function __construct($boardName, $ticketTitle, $ticketContent, $ticketAuthor, $ticketPriority, $ticketCategory, $ticketStatus, $boardId, $ticketUserId, $ticketId) {
 			$this->boardName 		= $boardName;
 			$this->boardId			= $boardId;
 			$this->ticketTitle 		= $ticketTitle;
@@ -18,6 +20,8 @@
 			$this->ticketPriority	= $ticketPriority;
 			$this->ticketCategory	= $ticketCategory;
 			$this->ticketStatus		= $ticketStatus;
+			$this->ticketUserId		= $ticketUserId;
+			$this->ticketId			= $ticketId;
 		}
 		
 		//Haal de projecten op, id moet geset zijn, searchId hoeft niet persé, dit is voor specifieke projecten
@@ -51,6 +55,8 @@
 				$ticketAuthor 	= array();
 				$ticketCategory = array();
 				$ticketStatus 	= array();
+				$ticketUserId	= array();
+				$ticketId		= array();
 				if($status == "personeel") {
 					$req2 = $db->prepare("SELECT * FROM tickets WHERE board_id = :id AND visibility != 'onzichtbaar'");
 				} elseif($status == "admin") {
@@ -65,6 +71,8 @@
 					array_push($ticketPriority, $ticket["priority"]);
 					array_push($ticketCategory, $ticket["category_id"]);
 					array_push($ticketStatus, $ticket["status"]);
+					array_push($ticketUserId, $ticket["user_id"]);
+					array_push($ticketId, $ticket["id"]);
 					
 					$req3 = $db->prepare("SELECT username FROM users WHERE id = :id");
 					$req3->execute(array('id' => $ticket["user_id"]));
@@ -73,7 +81,7 @@
 					array_push($ticketAuthor, $res["username"]);
 				}
 				
-				$list[] = new Board($boardName, $ticketTitle, $ticketContent, $ticketAuthor, $ticketPriority, $ticketCategory, $ticketStatus, $boardId);
+				$list[] = new Board($boardName, $ticketTitle, $ticketContent, $ticketAuthor, $ticketPriority, $ticketCategory, $ticketStatus, $boardId, $ticketUserId, $ticketId);
 			}
 			return $list; 
 		}
