@@ -90,6 +90,7 @@
 			
 			$tickets = Ticket::getTicket($_GET["id"]);
 			$categories = Ticket::getCategories();
+			$users = Ticket::getSubscribedUsers($_GET["id"]);
 			require_once("views/tickets/edit.php");
 		}
 		

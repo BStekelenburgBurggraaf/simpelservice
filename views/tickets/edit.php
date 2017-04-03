@@ -32,7 +32,7 @@
             
             </div>
             <label><b>Stuur mail naar alle users met een subscriptie</b></label><br/>
-            <input type="checkbox" name="mail" value="yes" /><br/>
+            <input id="checkbox" type="checkbox" name="mail" value="yes" /><br/>
             <span class="subtext">Dit wordt automatisch gedaan bij gesloten tickets</span><br/>
             <label><b>Images:</b></label>
             <div id="dynamicInput">
@@ -52,6 +52,12 @@
       	</div>
 	</form>
     <script>
+	$('#checkbox').click(function(){
+		if (this.checked) {
+			alertMail();
+		}
+	}) 
+	
 	function closed() {
 		var frm = document.getElementById("form");
 		var	sts = document.getElementById("status");
@@ -77,6 +83,20 @@
 				frm.removeChild(txt);
 			}
 		}
+	}
+	
+	function alertMail() {
+		alert("Deze mail word naar de volgende users verzonden: <?php 
+		$i = 0;
+		$len = count($users);
+		foreach($users as $user) { 
+			echo $user[1] . " - " . $user[2] . " - " . $user[3];
+			if($i != $len - 1) {
+				echo ", ";	
+			}
+			$i++;
+		}
+		?>");
 	}
 	</script>
 <?php } ?>
