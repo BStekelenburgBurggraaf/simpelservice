@@ -28,6 +28,7 @@
 		//simpelservice/boards/filterUser/x, x is hier niet optioneel
 		public function filterUser() {
 			$boards = Board::filterUser($_GET["id"]);
+			$role = Board::getUserType($_SESSION["id"]);
 			require_once("views/boards/home.php");	
 		}
 	}

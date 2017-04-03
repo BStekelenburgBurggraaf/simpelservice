@@ -124,12 +124,14 @@
 				$boardName = $board["title"];
 				$boardId = $board["id"];
 				//set arrays voor individuele tickets
-				$ticketTitle = array();
-				$ticketContent = array();
+				$ticketTitle	= array();
+				$ticketContent	= array();
 				$ticketPriority = array();
-				$ticketAuthor = array();
+				$ticketAuthor 	= array();
 				$ticketCategory = array();
-				$ticketStatus = array();
+				$ticketStatus 	= array();
+				$ticketUserId	= array();
+				$ticketId		= array();
 				//Herhaald, PDO kan niet goed omgaan met arrays in SQL IN ()
 				if($status == "personeel") {
 					$req2 = $db->prepare("SELECT * FROM tickets WHERE board_id = $boardId AND visibility != 'onzichtbaar' AND id IN ($ticketsCount)");
@@ -144,8 +146,9 @@
 					array_push($ticketContent, $ticket["description"]);
 					array_push($ticketPriority, $ticket["priority"]);
 					array_push($ticketCategory, $ticket["category_id"]);
-		
 					array_push($ticketStatus, $ticket["status"]);
+					array_push($ticketUserId, $ticket["user_id"]);
+					array_push($ticketId, $ticket["id"]);
 					
 					$req3 = $db->prepare("SELECT username FROM users WHERE id = :id");
 					$req3->execute(array('id' => $ticket["user_id"]));
@@ -154,7 +157,7 @@
 					array_push($ticketAuthor, $res["username"]);
 				}
 				
-				$list[] = new Board($boardName, $ticketTitle, $ticketContent, $ticketAuthor, $ticketPriority, $ticketCategory, $ticketStatus, $boardId);
+				$list[] = new Board($boardName, $ticketTitle, $ticketContent, $ticketAuthor, $ticketPriority, $ticketCategory, $ticketStatus, $boardId, $ticketUserId, $ticketId);
 			}
 			return $list;
 		}

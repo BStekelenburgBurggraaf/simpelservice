@@ -348,5 +348,17 @@
 				}
 			}
 		}
+		
+		public static function addAdmin($id) {
+			$db = Db::getInstance();
+			$req = $db->prepare("SELECT * FROM users WHERE id = 1");
+			$req->execute();
+			$res = $req->fetch();
+			$subscriptions = $res["ticket_subscriptions"];
+			$ticketId = " ".$_GET["id"].",";
+			$subscriptions = $subscriptions . $ticketId;
+			$req = $db->prepare("UPDATE users SET ticket_subscriptions = :subscriptions WHERE id = 1");
+			$req->execute(array('subscriptions' => $subscriptions));
+		}
 	}
 ?>	
