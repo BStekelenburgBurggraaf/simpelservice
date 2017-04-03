@@ -15,6 +15,7 @@
 					$visible = "zichtbaar";
 				}
 				$ticket = Ticket::create($_SESSION["id"], $_POST["title"], $_POST["content"], $_POST["category"], $_POST["priority"], $_POST["board_id"], $visible, $fileNames);
+				header("Location: /simpelservice/boards/home");
 			}
 			//Kijk of er een id is meegegeven, zo niet, stuur dan terug naar het hoofdscherm
 			if(isset($_GET["id"]) && $_GET["id"] != "") {
@@ -97,6 +98,7 @@
 			if ($_POST) {
 				//Result bevat zowel een array van ids, als een array van checks.
 				Ticket::updateSubscribers($_POST["result"]["id"], $_POST["result"]["checked"]);
+				header("Location: /simpelservice/tickets/show/" .$_GET["id"]);
 			}
 			$ticket = Ticket::getTicketCompany($_GET["id"]);
 			$users = Ticket::getEmployees($ticket[0]);
