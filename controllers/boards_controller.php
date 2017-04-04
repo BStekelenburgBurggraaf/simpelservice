@@ -31,5 +31,21 @@
 			$role = Board::getUserType($_SESSION["id"]);
 			require_once("views/boards/home.php");	
 		}
+		
+		public function addUsers() {
+			if ($_POST) {
+				//Result bevat zowel een array van ids, als een array van checks.
+				Board::updateSubscribers($_POST["result"]["id"], $_POST["result"]["checked"]);
+				header("Location: /simpelservice/tickets/show/" .$_GET["id"]);
+			}
+			$company = Board::getBoardCompany($_GET["id"]);
+			$users = Board::getEmployees($company[0]);
+			$role = Board::getUserType($_SESSION["id"]);
+			if($role == "admin") {
+				require_once("views/boards/addUsers.php");
+			} else {
+				header("Location: /simpelservice/boards/home/" . $_GET["id"]);	
+			}	
+		}
 	}
 ?>

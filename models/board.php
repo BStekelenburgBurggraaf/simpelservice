@@ -209,5 +209,61 @@
 			}
 			return $list;
 		}
+		
+		public static function getBoardCompany($id) {
+			$db = Db::getInstance();
+			
+			$id = intval($id);
+			
+			$req = $db->prepare("SELECT bedrijf_id FROM boards WHERE id = :id");	
+			$req->execute(array('id' => $id));
+			$res = $req->fetch();
+			return $res;
+		}
+		
+		public static function getEmployees($id) {
+			$db = Db::getInstance();
+			
+			$id = intval($id);
+			if($id == 1) {
+				$req = $db->prepare("SELECT * FROM users WHERE bedrijf_id = :id");
+			} else {
+				$req = $db->prepare("SELECT * FROM users WHERE bedrijf_id = :id OR bedrijf_id = 1");	
+			}
+			$req->execute(array('id' => $id));
+			foreach($req->fetchAll() as $user) {
+				$req = $db->prepare("SELECT * FROM bedrijf WHERE id = :id");
+				$req->execute(array('id' => $user["bedrijf_id"]));
+				$res = $req->fetch();
+				
+				$list[] = array($user["id"], $user["username"], $user["role"], $res["naam"], $user["board_subscriptions"]);
+			}
+			return $list;
+		}
+		
+		//Het updaten van de aangemelde users bij een ticket
+		public static function updateSubscribers($id, $check) {
+			$db = Db::getInstance();
+			for($i = 0; $i < count($id); $i++) {
+				$req = $db->prepare("SELECT board_subscriptions FROM users WHERE id = :id");
+				$req->execute(array('id' => $id[$i]));
+				$res = $req->fetch();
+				$subscriptions = $res["board_subscriptions"];
+				$ticketId = " ".$_GET["id"].",";
+				if($check[$i] == "false"){
+					if(strpos($subscriptions, $ticketId) !== false) {
+						$subscriptions = str_replace($ticketId, "", $subscriptions);
+						$req = $db->prepare("UPDATE users SET board_subscriptions = :subscriptions WHERE id = :id");
+						$req->execute(array('subscriptions' => $subscriptions, 'id' => $id[$i]));
+					}
+				} elseif($check[$i] == "true") {
+					if(strpos($subscriptions, $ticketId) === false) {
+						$subscriptions = $subscriptions	. $ticketId;
+						$req = $db->prepare("UPDATE users SET board_subscriptions = :subscriptions WHERE id = :id");
+						$req->execute(array('subscriptions' => $subscriptions, 'id' => $id[$i]));
+					}
+				}
+			}
+		}
 	}
 ?>

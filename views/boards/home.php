@@ -78,6 +78,7 @@
 		}
 		if(isset($role) && $role == "admin" && !empty($subscribedUsers)) { ?>
             	<h1>Users met een subscriptie</h1>
+                <a href="/simpelservice/boards/addUser/<?php echo $_GET["id"]; ?>">Users toevoegen bij dit project</a>
                 <hr/><br/>
                 <table>
                 	<tr>
