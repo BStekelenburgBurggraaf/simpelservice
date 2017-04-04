@@ -41,6 +41,7 @@
 		foreach($boards as $board) {
 		?>
             <h1 class="boardTitle"><?php echo $board->boardName; ?></h1>
+            <a href="/simpelservice/tickets/create/<?php echo $board->boardId; ?>">Maak een ticket aan</a>
             <hr />
             <table>
                 <tr>
