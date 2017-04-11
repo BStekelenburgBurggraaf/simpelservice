@@ -36,7 +36,7 @@
 			if ($_POST) {
 				//Result bevat zowel een array van ids, als een array van checks.
 				Board::updateSubscribers($_POST["result"]["id"], $_POST["result"]["checked"]);
-				header("Location: /simpelservice/tickets/show/" .$_GET["id"]);
+				header("Location: /simpelservice/boards/show/" .$_GET["id"]);
 			}
 			$company = Board::getBoardCompany($_GET["id"]);
 			$users = Board::getEmployees($company[0]);
